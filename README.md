@@ -8,3 +8,5 @@ CS 4471 – Computer Graphics
 Lakehead University
 
 The code was rushed and not well written, but the game should work well, especially on computers that have a newer GPU (including Intel HD).
+
+![game screenshot](screenshot.png)
