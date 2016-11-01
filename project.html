@@ -1,0 +1,74 @@
+<html>
+<head>
+	<script id="bacteria-vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	uniform float scale;
+	uniform float x_offset;
+	uniform float y_offset;
+	uniform float offset_scale;
+	
+	uniform vec4 color;
+	varying vec4 fColor;
+
+	void main(){
+		// for drawing with a scale_offset
+		gl_Position.xy = vPosition.xy*scale;
+		gl_Position.x += x_offset*offset_scale;
+		gl_Position.y += y_offset*offset_scale;
+		gl_Position.z = 0.0;
+		gl_Position.w = 1.0;
+		
+		fColor = color;
+	}
+	</script>
+	<script id="circle-vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	uniform float scale;
+	uniform float x_offset;
+	uniform float y_offset;
+	
+	uniform vec4 color;
+	varying vec4 fColor;
+
+	void main(){
+		// for drawing without a scale_offset
+		gl_Position.xy = vPosition.xy*scale;
+		gl_Position.x += x_offset;
+		gl_Position.y += y_offset;
+		gl_Position.z = 0.0;
+		gl_Position.w = 1.0;
+		
+		fColor = color*(-0.18*sqrt(vPosition.x*vPosition.x+vPosition.y*vPosition.y)+1.18);
+		// adds a slight gradient to the circle
+		// sqrt is slow, but it's fast enough
+	}
+	</script>
+	<script id="fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	
+	varying vec4 fColor;
+	
+	void main(){
+		// a very simple fragment shader
+		gl_FragColor = fColor;
+	}
+	</script>
+	<script type="text/javascript" src="javascript/common/webgl-utils.js"></script>
+	<script type="text/javascript" src="javascript/common/initShaders.js"></script>
+	<script type="text/javascript" src="javascript/common/MV.js"></script>
+	<script type="text/javascript" src="javascript/project.js"></script>
+	<script type="text/javascript" src="javascript/graphics.js"></script>
+	<script type="text/javascript" src="javascript/game.js"></script>
+	<script type="text/javascript" src="javascript/main_menu.js"></script>
+	<script type="text/javascript" src="javascript/utils.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/project.css">
+</head>
+<body style="background-color:#113355;">
+	<canvas id="gl-canvas" class="under" width="500" height="500">
+		Oops ... your browser doesn't support the HTML5 canvas element.
+	</canvas>
+	<canvas id="text-canvas" class="over" width="500" height="500">
+		Oops ... your browser doesn't support the HTML5 canvas element.
+	</canvas>
+</body>
+</html>
